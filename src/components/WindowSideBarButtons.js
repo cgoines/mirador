@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/InfoSharp';
 import AnnotationIcon from '@material-ui/icons/CommentSharp';
 import CanvasIndexIcon from './icons/CanvasIndexIcon';
-
+import { keys, chars } from '../lib/KeyHelper';
 /**
  *
  */
@@ -27,19 +27,6 @@ export class WindowSideBarButtons extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.keys = {
-      down: 'ArrowDown',
-      end: 'End',
-      home: 'Home',
-      up: 'ArrowUp',
-    };
-
-    this.chars = {
-      down: 40,
-      end: 35,
-      home: 36,
-      up: 38,
-    };
   }
 
   /**
@@ -105,11 +92,11 @@ export class WindowSideBarButtons extends Component {
    * @param {object} event the keyUp event
    */
   handleKeyUp(event) {
-    if (event.key === this.keys.up || event.which === this.chars.up) {
+    if (event.key === keys.up || event.which === chars.up) {
       event.preventDefault();
       return this.focusPreviousTab(event.target);
     }
-    if (event.key === this.keys.down || event.which === this.chars.down) {
+    if (event.key === keys.down || event.which === chars.down) {
       event.preventDefault();
       return this.focusNextTab(event.target);
     }
