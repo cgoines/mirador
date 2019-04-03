@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { Utils } from 'manifesto.js';
 import ActionTypes from './action-types';
 
 /**
@@ -44,6 +45,19 @@ export function receiveInfoResponseFailure(infoId, error) {
     type: ActionTypes.RECEIVE_INFO_RESPONSE_FAILURE,
   };
 }
+/** @private */
+function getAccessToken({ accessTokens }, iiifService) {
+  const services = Utils.getServices(iiifService).filter(s => s.getProfile().value.match(/http:\/\/iiif.io\/api\/auth\/1\//));
+
+  for (let i = 0; i < services.length; i += 1) {
+    const authService = services[i];
+    const accessTokenService = Utils.getService(authService, 'http://iiif.io/api/auth/1/token');
+    const token = accessTokens[accessTokenService.id];
+    if (token && token.json) return token.json.accessToken;
+  }
+
+  return undefined;
+}
 
 /**
  * fetchInfoResponse - action creator
@@ -52,12 +66,29 @@ export function receiveInfoResponseFailure(infoId, error) {
  * @memberof ActionCreators
  */
 export function fetchInfoResponse({ imageId, imageResource }) {
-  return ((dispatch) => {
+  return ((dispatch, getState) => {
+    const state = getState();
     const infoId = imageId || `${
       imageResource.getServices()[0].id.replace(/\/$/, '')
     }`;
+    const headers = {};
+
+    const imageResponse = imageId
+      && state.infoResponses[imageId]
+      && !state.infoResponses[imageId].isFetching
+      && state.infoResponses[imageId].json;
+
+    const token = getAccessToken(
+      getState(),
+      imageResponse || imageResource.getServices()[0],
+    );
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
     dispatch(requestInfoResponse(infoId));
-    return fetch(`${infoId}/info.json`)
+    return fetch(`${infoId}/info.json`, { headers })
       .then((response) => {
         response.json().then((json) => {
           dispatch(receiveInfoResponse(infoId, json, response.ok));
