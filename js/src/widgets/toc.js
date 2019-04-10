@@ -35,10 +35,10 @@
         this.tocData = _this.initTocData();
         switch (this.manifestVersion) {
           case '1':
-            this. ($.getRangeIDByCanvasID(_this.structures, _this.canvasID));
+            this.setSelectedElements($.getRangeIDByCanvasID(_this.structures, _this.canvasID));
       	    break;
       	  case '2':
-       	    this.setSelectedElements($.getRangeIDByCanvasIDv2(_this.structures[0], _this.canvasID));
+       	    this.setSelectedElements($.getRangeIDByCanvasIDv2(_this.structures, _this.canvasID));
       	    break;
         }
         this.element.find('.has-child ul').hide();
@@ -318,7 +318,7 @@
       	     _this.setSelectedElements($.getRangeIDByCanvasID(_this.structures, canvasID));
              break;
           case '2':
-            _this.setSelectedElements($.getRangeIDByCanvasIDv2(_this.structures[0], canvasID));
+            _this.setSelectedElements($.getRangeIDByCanvasIDv2(_this.structures, canvasID));
             break;
         }
         _this.render();
