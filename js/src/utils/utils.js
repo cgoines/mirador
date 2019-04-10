@@ -204,7 +204,7 @@
       }
     };
 
-    findRanges(canvasID,structures,rangeIDs, null);
+    findRanges(canvasID,structures[0],rangeIDs, null);
     return rangeIDs;
   };
 
