@@ -82,6 +82,7 @@
         canvasControls: this.canvasControls,
         annoEndpointAvailable: this.annoEndpointAvailable,
         showNextPrev : this.imagesList.length !== 1,
+	showImageControls: false,
         availableAnnotationStylePickers: this.state.getStateProperty('availableAnnotationStylePickers'),
         availableAnnotationTools: this.availableAnnotationTools,
         state: this.state,
