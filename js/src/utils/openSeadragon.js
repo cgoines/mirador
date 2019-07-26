@@ -11,9 +11,9 @@
         defaultZoomLevel: 0,
         blendTime:        0.1,
         alwaysBlend:      false,
-	crossOriginPolicy: 'Anonymous',
-        loadTilesWithAjax: false,
-        ajaxWithCredentials: false,
+	crossOriginPolicy: 'use-credentials',
+        loadTilesWithAjax: true,
+        ajaxWithCredentials: true,
         showNavigationControl: false
       }, options)
 
