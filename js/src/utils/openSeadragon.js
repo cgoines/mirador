@@ -12,7 +12,7 @@
         blendTime:        0.1,
         alwaysBlend:      false,
 	crossOriginPolicy: 'Anonymous',
-        loadTilesWithAjax: false,
+        //loadTilesWithAjax: true,
         ajaxWithCredentials: true,
         showNavigationControl: false
       }, options)
